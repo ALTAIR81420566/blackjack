@@ -1,5 +1,8 @@
 package edu.opendev.guess;
 
+import edu.opendev.guess.player.Player;
+import edu.opendev.guess.player.Respondent;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -22,7 +25,7 @@ public class GameGuess {
     /**
      * Тип перечисление для результатов проверки
      */
-    enum ResultCheck {
+    public enum ResultCheck {
         LEFT, MATCH, RIGHT;
     }
 
@@ -127,6 +130,7 @@ public class GameGuess {
     private void init(int max, Respondent respondent) {
         Random rnd = new Random();
         int value = rnd.nextInt(max) + 1;
+        value = 80;
 
         this.state = new GameState(max, value);
         this.respondent = respondent;

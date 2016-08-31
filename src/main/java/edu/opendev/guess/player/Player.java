@@ -1,4 +1,6 @@
-package edu.opendev.guess;
+package edu.opendev.guess.player;
+
+import edu.opendev.guess.GameGuess;
 
 import java.util.Scanner;
 
