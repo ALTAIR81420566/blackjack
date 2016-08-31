@@ -5,6 +5,7 @@ package edu.opendev.guess;
  */
 public interface Respondent {
 
-    int nextAnswer();
+    String getName();
+    int nextAnswer(GameGuess.ResultCheck prevResultCheck);
 
 }

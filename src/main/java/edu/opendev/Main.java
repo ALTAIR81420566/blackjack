@@ -1,10 +1,8 @@
 package edu.opendev;
 
+import edu.opendev.guess.Bot;
 import edu.opendev.guess.GameGuess;
-import edu.opendev.guess.Guesser;
 import edu.opendev.guess.Player;
-
-import java.io.FileNotFoundException;
 
 /**
  * типы данных
@@ -24,12 +22,16 @@ public class Main {
      *
      * @param args параметры запуска
      */
-    public static void main(String[] args) throws FileNotFoundException {
-        GameGuess gg = new GameGuess(100, new Player());
+    public static void main(String[] args) {
+
+        GameGuess gg2 = new GameGuess(100, new Bot(100));
+        gg2.start();
+
+        GameGuess gg = new GameGuess(100, new Player("Игрок-человек"));
         gg.start();
 
-        GameGuess gg2 = new GameGuess(100, new Guesser(100));
-        gg2.start();
+
+
 
 
     }

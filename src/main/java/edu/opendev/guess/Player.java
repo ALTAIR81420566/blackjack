@@ -1,6 +1,5 @@
 package edu.opendev.guess;
 
-import javax.swing.*;
 import java.util.Scanner;
 
 /**
@@ -8,13 +7,35 @@ import java.util.Scanner;
  */
 public class Player implements Respondent {
 
+    private String name;
+
+    public Player(String name) {
+        this.name = name;
+    }
+
     @Override
-    public int nextAnswer() {
-        int answer;
+    public String getName() {
+        return name;
+    }
+
+    public int nextAnswer(GameGuess.ResultCheck prevResultCheck) {
+
         System.out.println("ваш ответ:");
+
+        Integer answer = null;
+        String input;
         Scanner in = new Scanner(System.in);
-        answer = in.nextInt();
-        //answer = Integer.parseInt(JOptionPane.showInputDialog(null, "Ваш ответ: "));
+
+        while (answer == null) {
+            input = in.nextLine();
+            try {
+                answer = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("ошибка ввода");
+            }
+        }
+
         return answer;
     }
+
 }
