@@ -92,15 +92,39 @@ public class GameGuess {
             return r;
         }
 
+        public void reset() {
+            this.count = 0;
+            this.prevResultCheck = null;
+        }
     }
 
     /**
-     * Обязательный конструктор
+     * Конструктор с полной инициализацией
      *
      * @param max
      * @param respondent
      */
     public GameGuess(int max, Respondent respondent) {
+        init(max, respondent);
+    }
+
+    /**
+     * Конструктор по-умолчанию
+     */
+    public GameGuess() {
+        init(100, new Player("Аноним"));
+    }
+
+    /**
+     * Конструктор с частичной инициализацией
+     * TODO переделать конструкторы на фабричный метод
+     * @param max
+     */
+    public GameGuess(int max) {
+        init(max, new Player("Аноним"));
+    }
+
+    private void init(int max, Respondent respondent) {
         Random rnd = new Random();
         int value = rnd.nextInt(max) + 1;
 
@@ -108,34 +132,44 @@ public class GameGuess {
         this.respondent = respondent;
     }
 
+    public void setRespondent(Respondent respondent) {
+        this.respondent = respondent;
+    }
+
+    /**
+     * перед началом игры
+     */
+    private void before() {
+        System.out.println("Приветствую, " + respondent.getName() + "!");
+        System.out.printf("Я загадал число от 1 до %d, отгадайте его%n", state.max);
+        state.reset();
+    }
+
     /**
      * Начать играть
      */
     public void start() {
+        before();
         int answer;
         ResultCheck resultCheck;
-        printBefore();
         do {
             answer = respondent.nextAnswer(state.prevResultCheck);
             resultCheck = state.checkValue(answer);
             printResultCheck(resultCheck);
         } while (resultCheck != ResultCheck.MATCH);
-        printAfter();
+        after();
     }
 
-    private void printBefore() {
-        System.out.println("Приветствую, " + respondent.getName() + "!");
-        System.out.printf("Я загадал число от 1 до %d, отгадайте его%n", state.max);
+    /**
+     * после завершения игры
+     */
+    private void after() {
+        System.out.println("Игра завершена, " + respondent.getName()) ;
+        System.out.printf("Вы совершили %d попыток%n", state.count);
     }
-
 
     private void printResultCheck(ResultCheck resultCheck) {
         System.out.println(textMap.get(resultCheck));
-    }
-
-    private void printAfter() {
-        System.out.println("Игра завершена, " + respondent.getName()) ;
-        System.out.printf("Вы совершили %d попыток%n", state.count);
     }
 
 

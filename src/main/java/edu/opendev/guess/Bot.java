@@ -16,7 +16,7 @@ public class Bot implements Respondent {
 
     @Override
     public String getName() {
-        return "Бот, приспешник чистого рандома";
+        return "Бот-приспешник чистого рандома";
     }
 
     public int nextAnswer(GameGuess.ResultCheck prevResultCheck) {

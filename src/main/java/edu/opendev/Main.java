@@ -24,15 +24,11 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        GameGuess gg2 = new GameGuess(100, new Bot(100));
-        gg2.start();
-
-        GameGuess gg = new GameGuess(100, new Player("Игрок-человек"));
+        GameGuess gg = new GameGuess(100, new Bot(100));
         gg.start();
 
-
-
-
+        gg.setRespondent(new Player("Игрок-человек"));
+        gg.start();
 
     }
 
