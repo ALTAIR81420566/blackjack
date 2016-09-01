@@ -23,13 +23,6 @@ public class GameGuess {
     private GameState state;
 
     /**
-     * Тип перечисление для результатов проверки
-     */
-    public enum ResultCheck {
-        LEFT, MATCH, RIGHT;
-    }
-
-    /**
      * Коллекция типа Map, для сопоставления результатов проверки и их текстового описания
      */
     private static final Map<ResultCheck, String> textMap = new HashMap<ResultCheck, String>() {
@@ -39,6 +32,14 @@ public class GameGuess {
             put(ResultCheck.MATCH, "Победа!");
         }
     };
+
+    /**
+     * Тип перечисление для результатов проверки
+     */
+    public enum ResultCheck {
+        LEFT, MATCH, RIGHT;
+
+    }
 
     /**
      * Встроенный класс, описывает состояние игры и умеет проверять значение
@@ -130,7 +131,6 @@ public class GameGuess {
     private void init(int max, Respondent respondent) {
         Random rnd = new Random();
         int value = rnd.nextInt(max) + 1;
-        value = 80;
 
         this.state = new GameState(max, value);
         this.respondent = respondent;

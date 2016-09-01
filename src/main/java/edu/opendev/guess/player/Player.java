@@ -15,6 +15,10 @@ public class Player implements Respondent {
         this.name = name;
     }
 
+    public Player() {
+        this.name = "Аноним";
+    }
+
     @Override
     public String getName() {
         return name;

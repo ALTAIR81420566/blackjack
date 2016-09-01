@@ -1,10 +1,9 @@
 package edu.opendev;
 
-import edu.opendev.guess.player.Bot;
 import edu.opendev.guess.GameGuess;
 import edu.opendev.guess.player.DiBot;
 import edu.opendev.guess.player.Player;
-import edu.opendev.guess.player.RndBot;
+import edu.opendev.guess.player.StupidRndBot;
 
 /**
  * типы данных
@@ -28,11 +27,14 @@ public class Main {
 
         int max = 100;
 
-        GameGuess gg = new GameGuess(max, new RndBot(max));
+
+
+        GameGuess gg = new GameGuess(max, new StupidRndBot(max));
         gg.start();
 
         gg.setRespondent(new DiBot(max));
         gg.start();
+
 
         gg.setRespondent(new Player("Игрок-человек"));
         gg.start();

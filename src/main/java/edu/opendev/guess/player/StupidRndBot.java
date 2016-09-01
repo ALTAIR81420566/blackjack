@@ -2,18 +2,22 @@ package edu.opendev.guess.player;
 
 import edu.opendev.guess.GameGuess;
 
+import java.util.Random;
+
 /**
  * Created by ralex on 31.08.16.
  */
-public class RndBot extends Bot {
+public class StupidRndBot extends Bot {
 
-    public RndBot(int max) {
+    private Random rnd = new Random();
+
+    public StupidRndBot(int max) {
         super(max);
     }
 
     @Override
     public String getName() {
-        return "Бот-чистый рандом";
+        return "Бот-тупой рандом";
     }
 
     @Override
