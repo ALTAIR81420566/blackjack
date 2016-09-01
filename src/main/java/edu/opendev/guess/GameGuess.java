@@ -173,7 +173,9 @@ public class GameGuess {
     }
 
     private void printResultCheck(ResultCheck resultCheck) {
-        System.out.println(textMap.get(resultCheck));
+        if(this.respondent instanceof Player) {
+            System.out.println(textMap.get(resultCheck));
+        }
     }
 
 
