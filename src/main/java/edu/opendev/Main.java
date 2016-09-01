@@ -1,7 +1,6 @@
 package edu.opendev;
 
-import edu.opendev.guess.player.Bot;
-import edu.opendev.guess.GameGuess;
+import edu.opendev.guess.Game;
 import edu.opendev.guess.player.DiBot;
 import edu.opendev.guess.player.Player;
 import edu.opendev.guess.player.RndBot;
@@ -28,7 +27,7 @@ public class Main {
 
         int max = 100;
 
-        GameGuess gg = new GameGuess(max, new RndBot(max));
+        Game gg = new Game(max, new RndBot(max));
         gg.start();
 
         gg.setRespondent(new DiBot(max));

@@ -1,6 +1,6 @@
 package edu.opendev.guess.player;
 
-import edu.opendev.guess.GameGuess;
+import edu.opendev.guess.Game;
 
 /**
  * Created by ralex on 31.08.16.
@@ -23,12 +23,12 @@ public class DiBot extends Bot {
     }
 
     @Override
-    public int nextAnswer(GameGuess.ResultCheck prevResultCheck) {
+    public int nextAnswer(Game.ResultCheck prevResultCheck) {
         int answer;
 
-        if (prevResultCheck == GameGuess.ResultCheck.LEFT) {
+        if (prevResultCheck == Game.ResultCheck.LEFT) {
             left = prevAnswer;
-        } else if (prevResultCheck == GameGuess.ResultCheck.RIGHT) {
+        } else if (prevResultCheck == Game.ResultCheck.RIGHT) {
             right = prevAnswer;
         }
 

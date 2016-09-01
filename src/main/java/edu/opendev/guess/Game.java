@@ -10,7 +10,7 @@ import java.util.Random;
 /**
  * Created by ralex on 18.08.16.
  */
-public class GameGuess {
+public class Game {
 
     /**
      * Угадывающий (умеет давать предположительный ответ)
@@ -107,14 +107,14 @@ public class GameGuess {
      * @param max
      * @param respondent
      */
-    public GameGuess(int max, Respondent respondent) {
+    public Game(int max, Respondent respondent) {
         init(max, respondent);
     }
 
     /**
      * Конструктор по-умолчанию
      */
-    public GameGuess() {
+    public Game() {
         init(100, new Player("Аноним"));
     }
 
@@ -123,7 +123,7 @@ public class GameGuess {
      * TODO переделать конструкторы на фабричный метод
      * @param max
      */
-    public GameGuess(int max) {
+    public Game(int max) {
         init(max, new Player("Аноним"));
     }
 
