@@ -7,9 +7,7 @@ import java.util.Random;
 /**
  * Created by ralex on 31.08.16.
  */
-public class StupidRndBot extends Bot {
-
-    private Random rnd = new Random();
+public class StupidRndBot extends RndBot {
 
     public StupidRndBot(int max) {
         super(max);

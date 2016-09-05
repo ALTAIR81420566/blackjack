@@ -169,7 +169,7 @@ public class GameGuess {
      */
     private void after() {
         System.out.println("Игра завершена, " + respondent.getName()) ;
-        System.out.printf("Вы совершили %d попыток%n", state.count);
+        System.out.printf("Вы совершили %d попыток, загададное число: %d%n", state.count, state.value);
     }
 
     private void printResultCheck(ResultCheck resultCheck) {
