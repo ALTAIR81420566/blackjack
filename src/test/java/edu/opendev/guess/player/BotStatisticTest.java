@@ -159,7 +159,7 @@ public class BotStatisticTest {
         });
     }
 
-    @Test
+    @Test(timeout = 5000)
     public void makeStats() {
         StatsHelper statsHelper = new StatsHelper(100);
         statsHelper
