@@ -7,7 +7,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ralex on 05.09.16.
@@ -17,15 +19,28 @@ public class BotStatisticTest {
     private static final ByteArrayOutputStream outBuffer = new ByteArrayOutputStream();
     private static final PrintStream memOut = new PrintStream(outBuffer);
     private static final PrintStream stdOut = System.out;
-
-    private static final int max = 100;
-    private final static GameGuess gg = new GameGuess(max);
-    private long start;
-    private long end;
+    private final int max = 100;
 
     private class StatsHelper {
+        private final int countOfRuns;
         private List<Bot> bots = new ArrayList<>();
-        private List<GameGuess.GameResult> results = new ArrayList<>();
+        private Map<String, List<RunResult>> runResultMap = new HashMap<>();
+        private Map<String, AverageResult> averageResultMap = new HashMap<>();
+
+        private StatsHelper(int countOfRuns) {
+            this.countOfRuns = countOfRuns;
+        }
+
+        private class RunResult {
+            private double timeMs;
+            private int countTry;
+            private int value;
+        }
+
+        private class AverageResult {
+            private double averageTime;
+            private double averageCountTry;
+        }
 
         public StatsHelper addBot(Bot bot) {
             bots.add(bot);
@@ -33,25 +48,87 @@ public class BotStatisticTest {
         }
 
         public StatsHelper makeStats() {
+            for (int i = 0; i < countOfRuns; i++) {
+                GameGuess gg = new GameGuess(max);
+                run(gg);
+            }
+            calculateAverage();
+            return this;
+        }
+
+        private void calculateAverage() {
+            for(Map.Entry<String, List<RunResult>> entry : runResultMap.entrySet()) {
+                String name = entry.getKey();
+                List<RunResult> runResults = entry.getValue();
+
+                double totalTime = 0;
+                int totalCount = 0;
+                for (RunResult runResult : runResults) {
+                    totalTime += runResult.timeMs;
+                    totalCount += runResult.countTry;
+                }
+                AverageResult averageResult = new AverageResult();
+                averageResult.averageTime = totalTime / countOfRuns;
+                averageResult.averageCountTry = (double) totalCount / countOfRuns;
+                averageResultMap.put(name, averageResult);
+            }
+        }
+
+        private void run(GameGuess gg) {
+            long start, end;
+            GameGuess.GameResult gameResult;
             for (Bot bot : bots) {
                 gg.setRespondent(bot);
-                GameGuess.GameResult gameResult = gg.start();
-                results.add(gameResult);
+                start = System.nanoTime();
+                gameResult = gg.start();
+                end = System.nanoTime();
+
+                RunResult runResult = new RunResult();
+                runResult.timeMs = (end - start) / 1000_000.;
+                runResult.countTry = gameResult.getCount();
+                runResult.value = gameResult.getValue();
+
+                List<RunResult> runResultList = runResultMap.containsKey(bot.getName())
+                        ? runResultMap.get(bot.getName()) : new ArrayList<>();
+                runResultList.add(runResult);
+                runResultMap.put(bot.getName(), runResultList);
             }
-            return this;
         }
 
         public void printStats() {
 
             runWithStdOut(() -> {
-                for (GameGuess.GameResult result : results) {
-                    System.out.println("Игрок: " + result.getPlayerName());
-                    System.out.println("\tЧисло попыток: " + result.getCount());
-                    System.out.println("\tЗагаданное число: " + result.getValue());
+                System.out.println("Количество испытаний: " + countOfRuns);
+                for(Map.Entry<String, AverageResult> entry : averageResultMap.entrySet()) {
+                    String name = entry.getKey();
+                    AverageResult result = entry.getValue();
+                    System.out.println("Игрок: " + name);
+                    System.out.println("\tСреднее число попыток: " + result.averageCountTry);
+                    System.out.println("\tСреднее время выполнения(мс): " + result.averageTime);
                 }
             });
 
         }
+
+        public void printResults() {
+
+            runWithStdOut(() -> {
+                for(Map.Entry<String, List<RunResult>> entry : runResultMap.entrySet()) {
+                    String name = entry.getKey();
+                    List<RunResult> runResults = entry.getValue();
+                    System.out.println("Игрок: " + name);
+                    System.out.println("Количество испытаний: " + runResults.size());
+                    for(RunResult runResult : runResults) {
+                        System.out.print("\tЗагаданное число: " + runResult.value);
+                        System.out.print(", число попыток: " + runResult.countTry);
+                        System.out.println(", время выполнения(мс): " + runResult.timeMs);
+                    }
+
+                }
+            });
+
+        }
+
     }
 
     @BeforeClass
@@ -84,7 +161,7 @@ public class BotStatisticTest {
 
     @Test
     public void makeStats() {
-        StatsHelper statsHelper = new StatsHelper();
+        StatsHelper statsHelper = new StatsHelper(100);
         statsHelper
                 .addBot(new RndDiBot(max))
                 .addBot(new SmartRndBot(max))

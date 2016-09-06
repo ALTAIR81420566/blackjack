@@ -7,10 +7,11 @@ import edu.opendev.guess.GameGuess;
  */
 public class ForceBot extends Bot {
 
-    private int answer = 0;
+    private int answer;
 
     public ForceBot(int max) {
         super(max);
+        init();
     }
 
     @Override
@@ -21,5 +22,10 @@ public class ForceBot extends Bot {
     @Override
     public int nextAnswer(GameGuess.ResultCheck prevResultCheck) {
         return ++answer;
+    }
+
+    @Override
+    public void init() {
+        answer = 0;
     }
 }

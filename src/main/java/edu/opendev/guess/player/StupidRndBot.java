@@ -24,5 +24,10 @@ public class StupidRndBot extends RndBot {
         return answer;
     }
 
+    @Override
+    public void init() {
+
+    }
+
 
 }

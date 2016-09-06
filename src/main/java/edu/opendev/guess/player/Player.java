@@ -44,4 +44,9 @@ public class Player implements Respondent {
         return answer;
     }
 
+    @Override
+    public void init() {
+
+    }
+
 }

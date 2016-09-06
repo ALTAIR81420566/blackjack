@@ -198,6 +198,7 @@ public class GameGuess {
         System.out.println("Приветствую, " + respondent.getName() + "!");
         System.out.printf("Я загадал число от 1 до %d, отгадайте его%n", state.max);
         state.reset();
+        respondent.init();
     }
 
     /**

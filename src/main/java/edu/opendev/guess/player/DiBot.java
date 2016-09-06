@@ -13,8 +13,7 @@ public class DiBot extends Bot {
 
     public DiBot(int max) {
         super(max);
-        left = 0;
-        right = max;
+        init();
     }
 
     @Override
@@ -36,5 +35,12 @@ public class DiBot extends Bot {
 
         prevAnswer = answer;
         return answer;
+    }
+
+    @Override
+    public void init() {
+        left = 0;
+        right = max;
+        prevAnswer = 0;
     }
 }

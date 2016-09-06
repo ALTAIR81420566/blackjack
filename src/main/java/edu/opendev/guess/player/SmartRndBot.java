@@ -30,4 +30,9 @@ public class SmartRndBot extends RndBot {
 
         return answer;
     }
+
+    @Override
+    public void init() {
+        prevAnswersList.clear();
+    }
 }

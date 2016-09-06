@@ -13,8 +13,7 @@ public class RndDiBot extends RndBot {
 
     public RndDiBot(int max) {
         super(max);
-        left = 0;
-        right = max;
+        init();
     }
 
     @Override
@@ -36,5 +35,12 @@ public class RndDiBot extends RndBot {
 
         prevAnswer = answer;
         return answer;
+    }
+
+    @Override
+    public void init() {
+        left = 0;
+        right = max;
+        prevAnswer = 0;
     }
 }
