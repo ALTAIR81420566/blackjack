@@ -57,7 +57,7 @@ public class BotStatisticTest {
         }
 
         private void calculateAverage() {
-            for(Map.Entry<String, List<RunResult>> entry : runResultMap.entrySet()) {
+            for (Map.Entry<String, List<RunResult>> entry : runResultMap.entrySet()) {
                 String name = entry.getKey();
                 List<RunResult> runResults = entry.getValue();
 
@@ -88,18 +88,19 @@ public class BotStatisticTest {
                 runResult.countTry = gameResult.getCount();
                 runResult.value = gameResult.getValue();
 
-                List<RunResult> runResultList = runResultMap.containsKey(bot.getName())
+                List<RunResult> runResultList;
+                runResultList = runResultMap.containsKey(bot.getName())
                         ? runResultMap.get(bot.getName()) : new ArrayList<>();
                 runResultList.add(runResult);
                 runResultMap.put(bot.getName(), runResultList);
             }
         }
 
-        public void printStats() {
+        public StatsHelper printStats() {
 
             runWithStdOut(() -> {
                 System.out.println("Количество испытаний: " + countOfRuns);
-                for(Map.Entry<String, AverageResult> entry : averageResultMap.entrySet()) {
+                for (Map.Entry<String, AverageResult> entry : averageResultMap.entrySet()) {
                     String name = entry.getKey();
                     AverageResult result = entry.getValue();
                     System.out.println("Игрок: " + name);
@@ -108,17 +109,18 @@ public class BotStatisticTest {
                 }
             });
 
+            return this;
         }
 
         public void printResults() {
 
             runWithStdOut(() -> {
-                for(Map.Entry<String, List<RunResult>> entry : runResultMap.entrySet()) {
+                for (Map.Entry<String, List<RunResult>> entry : runResultMap.entrySet()) {
                     String name = entry.getKey();
                     List<RunResult> runResults = entry.getValue();
                     System.out.println("Игрок: " + name);
                     System.out.println("Количество испытаний: " + runResults.size());
-                    for(RunResult runResult : runResults) {
+                    for (RunResult runResult : runResults) {
                         System.out.print("\tЗагаданное число: " + runResult.value);
                         System.out.print(", число попыток: " + runResult.countTry);
                         System.out.println(", время выполнения(мс): " + runResult.timeMs);
@@ -157,6 +159,7 @@ public class BotStatisticTest {
                 System.out.println("************ test std output runnable by anonymous class *************");
             }
         });
+
     }
 
     @Test(timeout = 5000)
@@ -170,6 +173,7 @@ public class BotStatisticTest {
                 .addBot(new ForceBot(max))
                 .makeStats()
                 .printStats();
+                //.printResults();
     }
 
     /**

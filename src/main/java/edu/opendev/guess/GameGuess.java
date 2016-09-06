@@ -136,6 +136,10 @@ public class GameGuess {
         }
     }
 
+    public static GameGuess getInstance() {
+        return new GameGuess();
+    }
+
     /**
      * Конструктор с полной инициализацией
      *
