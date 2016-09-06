@@ -31,13 +31,14 @@ public class Main {
 
         GameGuess gg = new GameGuess(max, new StupidRndBot(max));
         gg.start();
+        System.out.println("******************");
 
         gg.setRespondent(new DiBot(max));
         gg.start();
+        System.out.println("******************");
 
-
-        gg.setRespondent(new Player("Игрок-человек"));
-        gg.start();
+        /*gg.setRespondent(new Player("Игрок-человек"));
+        gg.start();*/
 
     }
 

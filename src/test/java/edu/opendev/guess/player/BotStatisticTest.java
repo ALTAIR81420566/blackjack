@@ -6,6 +6,8 @@ import org.junit.*;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ralex on 05.09.16.
@@ -20,6 +22,42 @@ public class BotStatisticTest {
     private final static GameGuess gg = new GameGuess(max);
     private long start;
     private long end;
+
+    private class StatsHelper {
+        private List<Bot> bots = new ArrayList<>();
+        private List<GameGuess.GameResult> results = new ArrayList<>();
+
+        public StatsHelper addBot(Bot bot) {
+            bots.add(bot);
+            return this;
+        }
+
+        public StatsHelper makeStats() {
+            for (Bot bot : bots) {
+                gg.setRespondent(bot);
+                GameGuess.GameResult gameResult = gg.start();
+                results.add(gameResult);
+            }
+            return this;
+        }
+
+        public void printStats() {
+
+            runWithStdOut(() -> {
+                for (GameGuess.GameResult result : results) {
+                    System.out.println("Игрок: " + result.getPlayerName());
+                    System.out.println("\tЧисло попыток: " + result.getCount());
+                    System.out.println("\tЗагаданное число: " + result.getValue());
+                }
+            });
+
+        }
+    }
+
+    @BeforeClass
+    public static void beforeClass() {
+        switchToMemOut();
+    }
 
     /**
      * после выполнения всех тестов вернуть стандартный вывод в консоль
@@ -44,8 +82,22 @@ public class BotStatisticTest {
         });
     }
 
+    @Test
+    public void makeStats() {
+        StatsHelper statsHelper = new StatsHelper();
+        statsHelper
+                .addBot(new RndDiBot(max))
+                .addBot(new SmartRndBot(max))
+                .addBot(new StupidRndBot(max))
+                .addBot(new DiBot(max))
+                .addBot(new ForceBot(max))
+                .makeStats()
+                .printStats();
+    }
+
     /**
      * Метод принимает код, который получит обычный консольный вывод для своей работы
+     *
      * @param runnable
      */
     private void runWithStdOut(Runnable runnable) {
@@ -63,6 +115,7 @@ public class BotStatisticTest {
 
     /**
      * Переключить стандартный поток вывода на указанный файл
+     *
      * @param fileName имя файла (вместе с путем)
      * @throws FileNotFoundException
      */

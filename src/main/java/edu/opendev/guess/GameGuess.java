@@ -42,7 +42,39 @@ public class GameGuess {
     }
 
     /**
-     * Встроенный класс, описывает состояние игры и умеет проверять значение
+     * Класс для описания результатов игры
+     */
+    public class GameResult {
+        private final String playerName;
+        private final GameState state;
+
+        /**
+         * Приватный конструкор, наружу результаты могут попасть только от обрамляющего класса
+         * @param playerName
+         * @param state
+         */
+        private GameResult(String playerName, GameState state) {
+            this.playerName = playerName;
+            //здесь простое присваивание this.state = state не подходит, т.к. оно просто присвоит ссылку
+            // на тот же объект, нужно сделать новый объект-копию переданного, и присвоить уже его
+            this.state = new GameState(state);
+        }
+
+        public int getValue() {
+            return state.value;
+        }
+
+        public int getCount() {
+            return state.count;
+        }
+
+        public String getPlayerName() {
+            return playerName;
+        }
+    }
+
+    /**
+     * Встроенный класс, описывает состояние игры
      */
     private class GameState {
         /**
@@ -77,23 +109,25 @@ public class GameGuess {
         }
 
         /**
-         * Проверяет число, если оно меньше, больше или равно загаданному, вернет соответственно ResultCheck.LEFT,
-         * ResultCheck.RIGHT или ResultCheck.MATCH
-         * Обновляет поле {@link GameState#prevResultCheck }
-         *
-         * @param value
-         * @return
+         * конструктор копирования
+         * @param state
          */
-        public ResultCheck checkValue(int value) {
-            ResultCheck r = ResultCheck.MATCH;
-            if (value < this.value) {
-                r = ResultCheck.LEFT;
-            } else if (value > this.value) {
-                r = ResultCheck.RIGHT;
-            }
-            this.prevResultCheck = r;
-            this.count++;
-            return r;
+        public GameState(GameState state) {
+            //вызов другого конструктора, данном случае приватного
+            this(state.max, state.value, state.count);
+        }
+
+        /**
+         * Приватный конструтор, ислользуется конструктором копирования, можно было все сделать в констр.копирования,
+         * но я добавил этот, чтобы продемонстрировать как вызывать из одного конструктора другой
+         * @param max
+         * @param value
+         * @param count
+         */
+        private GameState(int max, int value, int count) {
+            this.max = max;
+            this.value = value;
+            this.count = count;
         }
 
         public void reset() {
@@ -109,14 +143,18 @@ public class GameGuess {
      * @param respondent
      */
     public GameGuess(int max, Respondent respondent) {
-        init(max, respondent);
+        Random rnd = new Random();
+        int value = rnd.nextInt(max) + 1;
+
+        this.state = new GameState(max, value);
+        this.respondent = respondent;
     }
 
     /**
      * Конструктор по-умолчанию
      */
     public GameGuess() {
-        init(100, new Player("Аноним"));
+        this(100, new Player("Аноним"));
     }
 
     /**
@@ -125,19 +163,32 @@ public class GameGuess {
      * @param max
      */
     public GameGuess(int max) {
-        init(max, new Player("Аноним"));
+        this(max, new Player("Аноним"));
     }
 
-    private void init(int max, Respondent respondent) {
-        Random rnd = new Random();
-        int value = rnd.nextInt(max) + 1;
-
-        this.state = new GameState(max, value);
-        this.respondent = respondent;
-    }
 
     public void setRespondent(Respondent respondent) {
         this.respondent = respondent;
+    }
+
+    /**
+     * Проверяет число, если оно меньше, больше или равно загаданному, вернет соответственно ResultCheck.LEFT,
+     * ResultCheck.RIGHT или ResultCheck.MATCH
+     * Обновляет поле {@link GameState#prevResultCheck }
+     *
+     * @param value
+     * @return
+     */
+    public ResultCheck checkValue(int value) {
+        ResultCheck r = ResultCheck.MATCH;
+        if (value < state.value) {
+            r = ResultCheck.LEFT;
+        } else if (value > state.value) {
+            r = ResultCheck.RIGHT;
+        }
+        state.prevResultCheck = r;
+        state.count++;
+        return r;
     }
 
     /**
@@ -152,24 +203,27 @@ public class GameGuess {
     /**
      * Начать играть
      */
-    public void start() {
+    public GameResult start() {
         before();
         int answer;
         ResultCheck resultCheck;
         do {
             answer = respondent.nextAnswer(state.prevResultCheck);
-            resultCheck = state.checkValue(answer);
+            resultCheck = checkValue(answer);
             printResultCheck(resultCheck);
         } while (resultCheck != ResultCheck.MATCH);
-        after();
+        GameResult result = new GameResult(respondent.getName(), state);
+        after(result);
+        return result;
     }
 
     /**
      * после завершения игры
+     * @param result
      */
-    private void after() {
-        System.out.println("Игра завершена, " + respondent.getName()) ;
-        System.out.printf("Вы совершили %d попыток, загададное число: %d%n", state.count, state.value);
+    private void after(GameResult result) {
+        System.out.println("Игра завершена, " + result.getPlayerName()) ;
+        System.out.printf("Вы совершили %d попыток, загададное число: %d%n", result.getCount(), result.getValue());
     }
 
     private void printResultCheck(ResultCheck resultCheck) {
@@ -177,6 +231,5 @@ public class GameGuess {
             System.out.println(textMap.get(resultCheck));
         }
     }
-
 
 }
