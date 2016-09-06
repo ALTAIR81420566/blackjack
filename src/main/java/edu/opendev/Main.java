@@ -1,9 +1,9 @@
 package edu.opendev;
 
-import edu.opendev.guess.Game;
+
+import edu.opendev.guess.GameGuess;
 import edu.opendev.guess.player.DiBot;
-import edu.opendev.guess.player.Player;
-import edu.opendev.guess.player.RndBot;
+import edu.opendev.guess.player.StupidRndBot;
 
 /**
  * типы данных
@@ -26,15 +26,16 @@ public class Main {
     public static void main(String[] args) {
 
         int max = 100;
-
-        Game gg = new Game(max, new RndBot(max));
+        GameGuess gg = new GameGuess(max, new StupidRndBot(max));
         gg.start();
+        System.out.println("******************");
 
         gg.setRespondent(new DiBot(max));
         gg.start();
+        System.out.println("******************");
 
-        gg.setRespondent(new Player("Игрок-человек"));
-        gg.start();
+        /*gg.setRespondent(new Player("Игрок-человек"));
+        gg.start();*/
 
     }
 

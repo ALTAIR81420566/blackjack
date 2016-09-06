@@ -3,15 +3,15 @@ package edu.opendev.guess.player;
 import edu.opendev.guess.GameGuess;
 
 /**
- * Created by ralex on 31.08.16.
+ * Created by ralex on 05.09.16.
  */
-public class DiBot extends Bot {
+public class RndDiBot extends RndBot {
 
     private int prevAnswer;
     private int left;
     private int right;
 
-    public DiBot(int max) {
+    public RndDiBot(int max) {
         super(max);
         left = 0;
         right = max;
@@ -19,7 +19,7 @@ public class DiBot extends Bot {
 
     @Override
     public String getName() {
-        return "Бот-дихотомист";
+        return "Бот-гибрид";
     }
 
     @Override
@@ -32,7 +32,7 @@ public class DiBot extends Bot {
             right = prevAnswer;
         }
 
-        answer = left + (right - left) / 2;
+        answer = left + rnd.nextInt(right - left) + 1;
 
         prevAnswer = answer;
         return answer;

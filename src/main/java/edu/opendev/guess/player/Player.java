@@ -1,6 +1,6 @@
 package edu.opendev.guess.player;
 
-import edu.opendev.guess.Game;
+import edu.opendev.guess.GameGuess;
 
 import java.util.Scanner;
 
@@ -15,12 +15,16 @@ public class Player implements Respondent {
         this.name = name;
     }
 
+    public Player() {
+        this.name = "Аноним";
+    }
+
     @Override
     public String getName() {
         return name;
     }
 
-    public int nextAnswer(Game.ResultCheck prevResultCheck) {
+    public int nextAnswer(GameGuess.ResultCheck prevResultCheck) {
 
         System.out.println("ваш ответ:");
 

@@ -1,6 +1,6 @@
 package edu.opendev.guess.player;
 
-import edu.opendev.guess.Game;
+import edu.opendev.guess.GameGuess;
 
 /**
  * Created by ralex on 23.08.16.
@@ -8,6 +8,6 @@ import edu.opendev.guess.Game;
 public interface Respondent {
 
     String getName();
-    int nextAnswer(Game.ResultCheck prevResultCheck);
+    int nextAnswer(GameGuess.ResultCheck prevResultCheck);
 
 }
