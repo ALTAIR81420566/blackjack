@@ -31,7 +31,7 @@ public class DiBot extends Bot {
             right = prevAnswer;
         }
 
-        answer = left + (right - left) / 2;
+        answer = left + (right - left + 1) / 2;
 
         prevAnswer = answer;
         return answer;
