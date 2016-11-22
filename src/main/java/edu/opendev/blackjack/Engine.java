@@ -15,12 +15,10 @@ public class Engine {
     private Player diller;
     private Deck cardDeck = new Deck();
     private boolean finish = false;
-    private boolean playerIsStep = false;
     private boolean win = false;
-    private String answer = "";
     private int i = 0;
 
-public void start(){
+void start(){
     startPlayer(player);
     if (!finish) {
         diller = new Diller();
@@ -44,7 +42,7 @@ public void start(){
         };
         thread.start();
         Scanner scanner = new Scanner(System.in);
-        answer = scanner.next();
+        String answer = scanner.next();
         System.out.println(answer);
         if(!answer.equals("бум")|| i == 5){
             System.out.println("Вы не успели.Существо сидевшее напротив, обхватило вашу шею своими длинными пальцами.");
@@ -58,7 +56,7 @@ public void start(){
     }
 
 }
-    public Engine(Player player){
+    Engine(Player player){
         this.player = player;
     }
 
@@ -127,6 +125,6 @@ public void start(){
                 break;
             }
 
-        }while(player.isSay() == true);
+        }while(player.isSay());
     }
 }

@@ -9,9 +9,6 @@ import java.util.Random;
 public class Deck {
     private ArrayList<Card> deck = new ArrayList<Card>();
 
-    public ArrayList<Card> getDeck(){
-        return deck;
-    }
     public Deck(){
         ArrayList<Card> deck = createDeck();
 
@@ -20,7 +17,7 @@ public class Deck {
     }
 
     private ArrayList<Card> createDeck(){
-        ArrayList<Card> deck = new ArrayList<Card>();
+        ArrayList<Card> deck = new ArrayList<>();
         for (int i = 0;i < 4;i++) {
             for (int j = 0;j < 13;j++){
                 deck.add(new Card(i,j));
@@ -29,7 +26,7 @@ public class Deck {
         return deck;
     }
 private ArrayList<Card> mix( ArrayList<Card> cards){
-    ArrayList<Card> mixed = new ArrayList<Card>();
+    ArrayList<Card> mixed = new ArrayList<>();
     Random randID = new Random();
     while (!cards.isEmpty()){
         int id = randID.nextInt(cards.size());

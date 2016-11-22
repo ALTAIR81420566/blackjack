@@ -12,8 +12,9 @@ import java.util.Scanner;
 public class Human implements Player {
     private ArrayList<Card> cards = new ArrayList<Card>();
     private int points;
-    private boolean isSay;
     private String name;
+
+
 
     public String getName() {
         return name;
@@ -32,7 +33,7 @@ public class Human implements Player {
                 .append(points));
 
         Scanner scanner = new Scanner(System.in);
-        String strToConsol = null;
+        String strToConsol;
         boolean answer;
         while (true){
             strToConsol = scanner.next();
@@ -44,7 +45,6 @@ public class Human implements Player {
                 break;
             }else {
                 System.err.println("Введено неверное значение! Повторите попытку.");
-                continue;
             }
         }
         return answer;
@@ -68,5 +68,15 @@ public class Human implements Player {
                 .append("\nТеперь никаких вопросов. Мы начинаем наше шоу!")
                 .append("\nЕсли хотите взять дополнительную карту, введите - \"взять\"")
                 .append("\nЕсли хотите оставить все как есть, введите - \"оставить\""));
+    }
+
+    public void clean() {
+        cards.removeAll(cards);
+        points = 0;
+    }
+
+    public void addCard(Card gameCard) {
+        cards.add(gameCard);
+        points += gameCard.getPoint();
     }
 }

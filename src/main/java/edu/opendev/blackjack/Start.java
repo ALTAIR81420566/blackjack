@@ -1,9 +1,7 @@
 package edu.opendev.blackjack;
 
-import edu.opendev.blackjack.Engine;
 import edu.opendev.blackjack.Players.Human;
 import edu.opendev.blackjack.Players.Player;
-import edu.opendev.blackjack.deck.Deck;
 
 /**
  * Created by Vlad on 03.10.2016.

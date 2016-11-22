@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by Vlad on 03.10.2016.
  */
 public class Diller implements Player {
-    private ArrayList<Card> cards = new ArrayList<Card>();
+    private ArrayList<Card> cards = new ArrayList<>();
     private int points;
     private boolean isSay;
     private  String name;
@@ -42,4 +42,15 @@ public class Diller implements Player {
     public int getPoints() {
         return points;
     }
+
+    public void addCard(Card gameCard) {
+        cards.add(gameCard);
+        points += gameCard.getPoint();
+    }
+
+    public void clean() {
+        cards.removeAll(cards);
+        points = 0;
+    }
+
 }
