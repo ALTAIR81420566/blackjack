@@ -3,5 +3,5 @@ package CardGame.Menu;
 /**
  * Created by vhurtin on 15.11.16.
  */
-public class OnlineGame implements MainMenu{
+public class OnlineGame {
 }
