@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Black.iml" filepath="$PROJECT_DIR$/.idea/modules/Black.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Black_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Black_main.iml" group="Black" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Black_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Black_test.iml" group="Black" />
+      <module fileurl="file://$PROJECT_DIR$/blackjack.iml" filepath="$PROJECT_DIR$/blackjack.iml" />
     </modules>
   </component>
 </project>

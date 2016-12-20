@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-=======
-group 'Jack'
->>>>>>> f951874ec95d95d20d4a1b6b3c84866323c10cf2
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-
-sourceCompatibility = 1.5
 
 repositories {
     mavenCentral()

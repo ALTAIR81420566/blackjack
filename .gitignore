@@ -6,3 +6,5 @@ build/
 *.iws
 *.ipr
 *.ids
+*.tmp
+*.ser
